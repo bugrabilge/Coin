@@ -254,6 +254,7 @@ iframe {
   color: #adadad;
   font-size: 22px;
 
+    margin-bottom:7px; /*Sembolün margini.*/
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
