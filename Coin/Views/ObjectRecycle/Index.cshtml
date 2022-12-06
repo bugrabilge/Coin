@@ -1,0 +1,49 @@
+﻿@using EntityLayer.Concrete
+@model List<ObjectRecycle>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+<head>
+
+    <title>Object Recycle</title>
+
+</head>
+<body>
+    <div class="services_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Geri Dönüşüm Nesnesi</th>
+                                <th>Hacmi</th>
+                                <th>Karbon Puanı</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                @if (item.ObjectStatus == true)
+                                {
+                                    <tr>
+                                        <td>@item.ObjectName</td>
+                                        <td>@item.ObjectQuantity</td>
+                                        <td>@item.ObjectCarbonPoint</td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <div><img src="~/tema/images/img-1.png" class="image_1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
