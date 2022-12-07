@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login V4</title>
+    <title>Kayıt Ol</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -32,7 +32,8 @@
     <link rel="stylesheet" type="text/css" href="/Login/css/util.css">
     <link rel="stylesheet" type="text/css" href="/Login/css/main.css">
     <!--===============================================================================================-->
-
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
     <div class="limiter">
@@ -41,23 +42,23 @@
 
                 <form class="login100-form validate-form" method="post">
                     <span class="login100-form-title p-b-49">
-                        Sign Up
+                        Kayıt Ol
                     </span>
 
                     <div class="wrap-input100 validate-input m-b-23" data-validate="name is reauired">
-                        <span class="label-input100">Name</span>
+                        <span class="label-input100">Ad</span>
                         <input class="input100" type="text" asp-for="Name" placeholder="Type your name">
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-23" data-validate="Surname is reauired">
-                        <span class="label-input100">Surname</span>
+                        <span class="label-input100">Soyad</span>
                         <input class="input100" type="text" asp-for="Surname" placeholder="Type your Surname">
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
-                        <span class="label-input100">Username</span>
+                        <span class="label-input100">Kullanıcı Adı</span>
                         <input class="input100" type="text" asp-for="UserName" placeholder="Type your username">
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
@@ -69,7 +70,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <span class="label-input100">Password</span>
+                        <span class="label-input100">Şifre</span>
                         <input class="input100" type="password" asp-for="Password" placeholder="Type your password">
                         <span class="focus-input100" data-symbol="&#xf190;"></span>
                     </div>
@@ -78,18 +79,24 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn">
-                                Sign Up
+                            <button id="btn1" class="login100-form-btn">
+                                Kayıt Ol
                             </button>
                         </div>
                     </div>
 
+                    <script>
+                        $('#btn1').click(function () {
+                            swal("Kaydınız Başarıyla Alınmıştır", "Giriş Sayfasına Yönlendiriliyorsunuz", "success");
+                        });
+                    </script>
 
                 </form>
             </div>
         </div>
     </div>
 
+  
 
     <div id="dropDownSelect1"></div>
 
