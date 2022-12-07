@@ -22,8 +22,6 @@ namespace Coin.Controllers
         [HttpPost]
         public IActionResult Index(Users users)
         {
-            users.Name="Alperen";
-            users.Surname = "Tan";
             users.UsersAdress = 10;
             users.UserStatus = true;
             users.Coin = 100;
