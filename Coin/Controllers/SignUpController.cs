@@ -26,6 +26,7 @@ namespace Coin.Controllers
             users.UserStatus = true;
             users.Coin = 100;
             users.RecycleCoin = 100;
+            users.CarbonPoint=1000;
             um.UserAdd(users);
             return RedirectToAction("Index","Login");
         }

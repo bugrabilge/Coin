@@ -1,0 +1,49 @@
+﻿@model EntityLayer.Concrete.Users
+@{
+    ViewData["Title"] = "Convert";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    <div class="services_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="services_taital">WELCOME TO FINAnCIAL SERVICES</h1>
+
+                    <form method="post">
+                        <div>
+                            <section style=" font-size:20px; height:700px; background-color:burlywood; border:5px; border-color:burlywood; text-align-last:center; padding:330px;">
+                                <label>@ViewBag.Coin</label>
+                                <br />
+                                <div>
+                                    <button formmethod="post" type="submit" class="login100-form-btn" style="background-color:aquamarine">
+                                        dönüştür
+                                    </button>
+                                </div>
+
+                            </section>
+                        </div>
+                    </form>
+                    
+
+
+
+
+
+                </div>
+                <div class="col-md-4">
+                    <div><img src="~/tema/images/img-1.png" class="image_1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

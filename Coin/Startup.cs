@@ -24,6 +24,14 @@ namespace Coin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // session service
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AdventureWorks.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +53,9 @@ namespace Coin
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // session middleware
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

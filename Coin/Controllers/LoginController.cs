@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace Coin.Controllers
 {
@@ -23,11 +26,16 @@ namespace Coin.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Users users)
         {
-            
             var dataValue = c.Users.FirstOrDefault(x =>x.UserName==users.UserName && x.Password == users.Password);
+
+            var sessionName = "userId";
+
+            HttpContext.Session.SetInt32(sessionName, dataValue.UserID);
+
             if (dataValue != null)
             {
                 return RedirectToAction("Index", "Home");
+
             }
             else
             {
@@ -35,5 +43,15 @@ namespace Coin.Controllers
             }
             
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Login");
+        }
+
+
+
     }
 }
