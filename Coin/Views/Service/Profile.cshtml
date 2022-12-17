@@ -1,0 +1,61 @@
+﻿@model EntityLayer.Concrete.Users
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<link href="~/css/IDCard.css" type="text/css" rel="stylesheet" />
+
+<div style="margin:0px; padding:0px;">
+    <!--Arka Plan-->
+    <div class="container">
+        <div style="align-items:center" class="row">
+            <div class="col-md-8">
+                <h1 style="margin-top:50px;" class="services_taital">Profil</h1>
+                <div style="margin-bottom:150px;" class="container d-flex justify-content-center mt-5">
+
+                    <div style="margin-top:25px;" class="card">
+
+                        <div class="top-container">
+
+                            <img src="/Login/images/user 01.png" class="img-fluid profile-image" width="70">
+
+                            <div class="ml-3">
+                                <p class="namemail">@ViewBag.Name @ViewBag.Surname</p>
+                                <h5 class="name">@ViewBag.UserName</h5>
+                                <p class="mail">@ViewBag.Mail</p>
+
+                            </div>
+                        </div>
+
+
+                        <div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
+                            <div class="dollar-div px-3">
+
+                                <div class="round-div"><i class="fa fa-dollar dollar"></i></div>
+
+                            </div>
+                            <div class="d-flex flex-column text-right mr-2">
+                                <span class="current-balance">Current Balance</span>
+                                <span class="amount"><span class="dollar-sign">$</span>@ViewBag.RecycleCoin RC</span>
+                            </div>
+
+                        </div>
+
+                        <div class="fashion-studio-border pt-2">
+                            <span class="fashion-studio">Hesabımdaki Carbon = @ViewBag.Carbon</span>
+                        </div>
+                        <div class="wishlist-border pt-2">
+                            <span class="wishlist">1 Recycle Coin (RC) = 100.000.000 Carbon (C)</span>
+                        </div>
+                        <div class="recent-border mt-4">
+                            <span class="recent-orders"><a class="recent-orders" href="/Service/Convert/">Carbonları RC Coin'e Dönüştür</a></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

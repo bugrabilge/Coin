@@ -21,10 +21,31 @@ namespace Coin.Controllers
             return View();
         }
 
-        
+
         [HttpGet]
         public IActionResult Convert()
         {
+            return View();
+        }
+
+        public ActionResult Profile()
+        {
+            var u = HttpContext.Session.GetInt32("userId");
+
+            var dataValue = c.Users.FirstOrDefault(x => x.UserID == u);
+
+            if (dataValue != null)
+            {
+                ViewBag.UserName = dataValue.UserName;
+                ViewBag.Mail = dataValue.UserMail;
+                ViewBag.Name = dataValue.Name;
+                ViewBag.Surname = dataValue.Surname;
+                ViewBag.RecycleCoin = dataValue.RecycleCoin;
+                ViewBag.Carbon = dataValue.CarbonPoint;
+            }
+
+
+
             return View();
         }
 
@@ -34,11 +55,11 @@ namespace Coin.Controllers
             var userId = HttpContext.Session.GetInt32("userId");
 
             var dataValue = c.Users.FirstOrDefault(x => x.UserID == userId);
-            
+
             if (dataValue != null)
             {
-                double coin=dataValue.CarbonPoint / 10 + dataValue.RecycleCoin;
-                dataValue.RecycleCoin= coin;
+                double coin = dataValue.CarbonPoint / 10 + dataValue.RecycleCoin;
+                dataValue.RecycleCoin = coin;
                 um.UserUpdate(dataValue);
             }
             ViewBag.Coin = dataValue.RecycleCoin;

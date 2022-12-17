@@ -26,16 +26,13 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                @if (item.ObjectStatus == true)
-                                {
-                                    <tr>
-                                        <td>@item.ObjectName</td>
-                                        <td>@item.ObjectQuantity</td>
-                                        <td>@item.ObjectCarbonPoint</td>
-                                    </tr>
-                                }
-
-                            }
+                @if (item.ObjectStatus == true)
+                {
+<tr>
+    <td>@item.ObjectName</td>
+    <td>@item.ObjectQuantity</td>
+    <td>@item.ObjectCarbonPoint</td>
+</tr>}}
                         </tbody>
                     </table>
                 </div>

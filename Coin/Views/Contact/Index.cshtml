@@ -1,38 +1,86 @@
-﻿@using EntityLayer.Concrete
-@model List<Contact>
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/UserLayout.cshtml";
-}
+﻿@model EntityLayer.Concrete.Contact
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/UserLayout.cshtml"; }
 
 <head>
 
-    <title>Contact</title>
+    <title>Bize Ulaşın</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        #button {
+            position: relative;
+            background-color: #FF5A58;
+            border: none;
+            font-size: 14px;
+            color: #FFFFFF;
+            padding: 2px;
+            width: 200px;
+            text-align: center;
+            transition-duration: 0.4s;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 36px;
+        }
+
+            #button:after {
+                content: "";
+                background: #f1f1f1;
+                display: block;
+                position: absolute;
+                padding-top: 300%;
+                padding-left: 350%;
+                margin-left: -20px !important;
+                margin-top: -120%;
+                opacity: 0;
+                transition: all 0.8s
+            }
+
+            #button:active:after {
+                padding: 0;
+                margin: 0;
+                opacity: 1;
+                transition: 0s
+            }
+    </style>
 
 </head>
 
 <div class="contact_section layout_padding">
     <div class="container-fluid">
-        <h1 class="what_taital">Contact us</h1>
+
+        <h1 class="what_taital">Bize Ulaşın</h1>
         <p class="amet_text">amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </p>
         <div class="contact_section2">
+
             <div class="row">
                 <div class="col-md-6 padding_left_0">
-                    <div class="mail_section">
-                        <input type="" class="mail_text_1" placeholder="Name" name="Name">
-                        <input type="" class="mail_text_1" placeholder="Phone Number" name="Phone Number">
-                        <input type="" class="mail_text_1" placeholder="Email" name="Email">
-                        <textarea class="massage_text" placeholder="Message" rows="5" id="comment" name="Message"></textarea>
-                        <div class="send_bt"><a href="#">send</a></div>
-                    </div>
+                    <form method="post">
+                        <div class="mail_section">
+                            <input type="text" class="mail_text_1" asp-for="ContactUserName" placeholder="Kullanıcı Adı">
+                            <input type="text" class="mail_text_1" asp-for="ContactTitle" placeholder="Telefon Numarası">
+                            <input type="text" class="mail_text_1" asp-for="ContactUserMail" placeholder="E-mail">
+                            <input type="text" class="massage_text" asp-for="ContactMessage" placeholder="Mesaj" rows="5" id="comment" />
+                            <button id="button" formmethod="post" class="send_bt">
+                                <p style="font-family:Corbel; font-size:large; font-style:unset" id="textbtn">SEND</p>
+                            </button>
+                            <script>
+                                $('#button').click(function () {
+                                    swal("Mesajınız Başarıyla Alınmıştır", "Kısa Süre İçerisinde Geri Dönüş Sağlanacaktır.", "success");
+                                });
+                            </script>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-md-6 padding_0">
                     <div class="map-responsive">
-                        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=Eiffel+Tower+Paris+France" width="600" height="400" frameborder="0" style="border:0; width: 100%;" allowfullscreen=""></iframe>
+                        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=Hasan+Ferdi+Turgutlu+Teknoloji" width="600" height="400" frameborder="0" style="border:0; width: 100%;" allowfullscreen=""></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 

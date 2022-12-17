@@ -12,7 +12,7 @@ namespace DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=DESKTOP-J7SKD7G;database=CoinDb; integrated security=true;");
+            optionsBuilder.UseSqlServer("server=DESKTOP-3DO8R5T;database=CoinDb; integrated security=true;");
         }
 
         public DbSet<About> Abouts { get; set; }
