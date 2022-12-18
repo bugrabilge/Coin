@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,12 @@ namespace Coin.Controllers
 {
     public class SignUpController : Controller
     {
-        UsersManager um = new UsersManager(new EfUsersRepository());
+        private readonly IUsersService _usersService;
+
+        public SignUpController(IUsersService usersService)
+        {
+            this._usersService = usersService;
+        }
 
         [HttpGet]
         public IActionResult Index()
@@ -26,8 +32,8 @@ namespace Coin.Controllers
             users.UserStatus = true;
             users.Coin = 100;
             users.RecycleCoin = 100;
-            users.CarbonPoint=1000;
-            um.UserAdd(users);
+            users.CarbonPoint = 1000;
+            _usersService.UserAdd(users);
             return RedirectToAction("Index","Login");
         }
     }

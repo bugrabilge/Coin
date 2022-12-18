@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,10 +11,16 @@ namespace Coin.Controllers
 {
     public class ObjectRecycleController : Controller
     {
-        ObjectRecycleManager om = new ObjectRecycleManager(new EfObjectRecycleRepository());
+        private readonly IObjectRecycleService _ojService;
+
+        public ObjectRecycleController(IObjectRecycleService ojService)
+        {
+            this._ojService = ojService;
+        }
+
         public IActionResult Index()
         {
-            var values = om.GetAllList();
+            var values = _ojService.GetAllList();
             return View(values);
         }
     }

@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,13 @@ namespace Coin.Controllers
 {
     public class AboutController : Controller
     {
-        AboutManager abm = new AboutManager(new EfAboutRepository());
+        private readonly IAboutService _aboutService;
+
+        public AboutController(IAboutService aboutService)
+        {
+            _aboutService = aboutService;
+        }
+
         public IActionResult Index()
         {
             

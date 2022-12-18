@@ -14,8 +14,6 @@ namespace Coin.Controllers
 {
     public class LoginController : Controller
     {
-        Context c = new Context();
-
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Index()
@@ -24,24 +22,25 @@ namespace Coin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Users users)
+        public IActionResult Index(Users user)
         {
-            var dataValue = c.Users.FirstOrDefault(x =>x.UserName==users.UserName && x.Password == users.Password);
-
-            var sessionName = "userId";
-
-            HttpContext.Session.SetInt32(sessionName, dataValue.UserID);
-
-            if (dataValue != null)
+            using (var context = new Context())
             {
-                return RedirectToAction("Index", "Home");
+                var loginUser = context.Users.FirstOrDefault(x => x.UserName == user.UserName && x.Password == user.Password);
 
+                if (loginUser != null) 
+                {
+                    var sessionName = "userId";
+                    HttpContext.Session.SetInt32(sessionName, loginUser.UserID);
+                    ViewBag.Log = "Login Succeeded";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Log = "Access Denied";
+                    return View();
+                }
             }
-            else
-            {
-                return View();
-            }
-            
         }
 
         [HttpPost]

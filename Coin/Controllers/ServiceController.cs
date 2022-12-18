@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -14,8 +15,13 @@ namespace Coin.Controllers
     [MyAuthentication]
     public class ServiceController : Controller
     {
-        Context c = new Context();
-        UsersManager um = new UsersManager(new EfUsersRepository());
+        private readonly IUsersService _userService;
+
+        public ServiceController(IUsersService userService)
+        {
+            _userService = userService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -25,47 +31,51 @@ namespace Coin.Controllers
         [HttpGet]
         public IActionResult Convert()
         {
+            GetAndSetUserInfo();
             return View();
         }
 
-        public ActionResult Profile()
+        public IActionResult Profile()
         {
-            var u = HttpContext.Session.GetInt32("userId");
-
-            var dataValue = c.Users.FirstOrDefault(x => x.UserID == u);
-
-            if (dataValue != null)
-            {
-                ViewBag.UserName = dataValue.UserName;
-                ViewBag.Mail = dataValue.UserMail;
-                ViewBag.Name = dataValue.Name;
-                ViewBag.Surname = dataValue.Surname;
-                ViewBag.RecycleCoin = dataValue.RecycleCoin;
-                ViewBag.Carbon = dataValue.CarbonPoint;
-            }
-
-
-
+            GetAndSetUserInfo();
             return View();
         }
 
         [HttpPost]
         public IActionResult Convert(double amount)
         {
-            var userId = HttpContext.Session.GetInt32("userId");
+            var user = GetAndSetUserInfo();
 
-            var dataValue = c.Users.FirstOrDefault(x => x.UserID == userId);
-
-            if (dataValue != null)
+            if (user != null)
             {
-                double coin = dataValue.CarbonPoint / 10 + dataValue.RecycleCoin;
-                dataValue.RecycleCoin = coin;
-                um.UserUpdate(dataValue);
+                double coinToAdd = user.CarbonPoint / 100000000;
+                double currentCoin = coinToAdd + user.RecycleCoin;
+                user.RecycleCoin = currentCoin;
+                user.CarbonPoint = user.CarbonPoint - (int)(coinToAdd * 100000000);
+                _userService.UserUpdate(user);
             }
-            ViewBag.Coin = dataValue.RecycleCoin;
+            ViewBag.Coin = user.RecycleCoin;
+            GetAndSetUserInfo();
             return View();
         }
 
+        public Users GetAndSetUserInfo()
+        {
+                var userId = HttpContext.Session.GetInt32("userId").GetValueOrDefault();
+                var user = _userService.GetByID(userId);
+
+                if (user != null)
+                {
+                    ViewBag.UserName = user.UserName;
+                    ViewBag.Mail = user.UserMail;
+                    ViewBag.Name = user.Name;
+                    ViewBag.Surname = user.Surname;
+                    ViewBag.RecycleCoin = user.RecycleCoin;
+                    ViewBag.Carbon = user.CarbonPoint;
+                }
+
+            return user;
+        }
 
     }
 }

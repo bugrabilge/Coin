@@ -1,3 +1,7 @@
+using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
+using DataAccessLayer.Abstract;
+using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +28,14 @@ namespace Coin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IContactDal, EfContactRepository>();
+            services.AddScoped<IUsersDal, EfUsersRepository>();
+            services.AddScoped<IAboutDal, EfAboutRepository>();
+            services.AddScoped<IObjectRecycleDal, EfObjectRecycleRepository>();
+            services.AddScoped<IContactService, ContactManager>();
+            services.AddScoped<IObjectRecycleService, ObjectRecycleManager>();
+            services.AddScoped<IUsersService, UsersManager>();
+            services.AddScoped<IAboutService, AboutManager>();
 
             // session service
             services.AddSession(options =>
