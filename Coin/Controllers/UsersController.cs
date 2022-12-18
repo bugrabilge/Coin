@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,7 +11,13 @@ namespace Coin.Controllers
 {
     public class UsersController : Controller
     {
-        UsersManager um = new UsersManager(new EfUsersRepository());
+        private readonly IUsersService _usersService;
+
+        public UsersController(IUsersService usersService)
+        {
+            this._usersService = usersService;
+        }
+
         public IActionResult Index()
         {
             return View();

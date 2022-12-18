@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
+using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +13,12 @@ namespace Coin.Controllers
 {
     public class ContactController : Controller
     {
-        ContactManager cm = new ContactManager(new EfContactRepository());
+        private readonly IContactService _contactService;
+
+        public ContactController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
 
         [HttpGet]
         public IActionResult Index()
@@ -22,7 +29,7 @@ namespace Coin.Controllers
         [HttpPost]
         public IActionResult Index(Contact contact)
         {
-            cm.AddContact(contact);
+            _contactService.AddContact(contact);
             return RedirectToAction("Index", "Contact");
         }
     }
