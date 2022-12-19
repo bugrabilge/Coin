@@ -45,5 +45,9 @@ namespace BusinessLayer.Concrete
             _usersDal.Update(users);
         }
 
+        public Users GetUserByMail(string mail)
+        {
+            return _usersDal.GetListAll().FirstOrDefault(u => u.UserMail == mail);
+        }
     }
 }
