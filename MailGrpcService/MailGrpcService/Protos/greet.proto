@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "MailGrpcService";
+
+package greet;
+
+// The greeting service definition.
+service SendMailService{
+  // Sends a greeting
+  rpc SendMail(MailRequest) returns (MailReply);
+}
+
+// The request message containing the user's name.
+message MailRequest {
+  string toMailAddress = 1;
+  string newPassword = 2;
+}
+
+// The response message containing the greetings.
+message MailReply {
+  string message = 1;
+}

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "PxD/UzeJWGq5zDUZLZ6ghJ51QEtT3PUdTu30c1u8mQU=",
+  "Source": "MailGrpcService",
+  "BasePath": "_content/MailGrpcService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
