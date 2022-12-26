@@ -1,0 +1,37 @@
+﻿@model Coin.Models.Concrete.BlockChain
+
+@{
+    ViewData["Title"] = "TransactionHistory";
+    Layout = "~/Views/Shared/_LayoutLogined.cshtml";
+}
+
+<link href="~/css/IDCard.css" type="text/css" rel="stylesheet" />
+
+<div style="margin:0px; padding:0px;">
+    <!--Arka Plan-->
+    <div class="container">
+        <div style="align-items:center" class="row">
+            <div class="col-md-8">
+                <h1 style="margin-top:50px;" class="services_taital">Blockchain İşlem Geçmişi</h1>
+                <div style="margin-bottom:150px;" class="container d-flex justify-content-center mt-5">
+
+                    <div class="container" style="column-gap:initial">
+                    @for (int i = 1; i < Model.Chain.Count; i++)
+                    {
+                        @for (int j = 0; j < Model.Chain[i].Transactions.Count; j++)
+                        {
+                            <div style="margin-top:25px;" class="card">
+                                <div>Gönderenin Adresi : @Model.Chain[i].Transactions[j].FromAdress </div>
+                                <div>Alıcının Adresi   : @Model.Chain[i].Transactions[j].ToAdress </div>
+                                <div>Miktar            : @Model.Chain[i].Transactions[j].Amount </div>
+                                <div>Zaman             : @Model.Chain[i].TimeStamp</div>
+                            </div>
+                        }
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,7 +1,7 @@
 ﻿@model EntityLayer.Concrete.Users
 @{
     ViewData["Title"] = "Convert";
-    Layout = "~/Views/Shared/UserLayout.cshtml";
+    Layout = "~/Views/Shared/_LayoutLogined.cshtml";
 }
 
 <!DOCTYPE html>
@@ -67,6 +67,7 @@
                                 </div>
                                 <section>
                                     <label class="recent-orders">@ViewBag.Coin</label>
+                                    <label class="recent-orders">@ViewBag.YetersizBakiye</label>
                                     <br />
                                     <div>
                                         <button style="height:60px; width:100px; background-color: #FF5A58; border:0px; border-radius:20px;" formmethod="post" type="submit" class="recent-orders">

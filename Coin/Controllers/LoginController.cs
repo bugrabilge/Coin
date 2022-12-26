@@ -49,7 +49,7 @@ namespace Coin.Controllers
                     var sessionName = "userId";
                     HttpContext.Session.SetInt32(sessionName, loginUser.UserID);
                     ViewBag.Log = "Login Succeeded";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Service");
                 }
                 else
                 {
@@ -60,9 +60,9 @@ namespace Coin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Login");
         }
 

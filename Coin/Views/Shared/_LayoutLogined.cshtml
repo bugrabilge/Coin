@@ -1,0 +1,15 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+@await Html.PartialAsync("/Views/LayoutPartial/_ScriptPartial.cshtml")
+<body>
+    @await Html.PartialAsync("/Views/LayoutPartial/LoginedHeader.cshtml")
+    @RenderBody()
+
+    @await Html.PartialAsync("/Views/LayoutPartial/_FooterPartial.cshtml")
+</body>
+</html>

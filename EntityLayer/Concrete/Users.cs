@@ -16,9 +16,8 @@ namespace EntityLayer.Concrete
         public string UserMail { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public int UsersAdress { get; set; }
-        public double RecycleCoin { get; set; }
-        public double Coin { get; set; }
+        public string UsersAdress { get; set; }
+        public int RecycleCoin { get; set; }
         public int CarbonPoint { get; set; }
         public bool UserStatus { get; set; }
     }
