@@ -47,10 +47,23 @@ namespace Coin.Controllers
 
                 if (loginUser != null) 
                 {
-                    var sessionName = "userId";
-                    HttpContext.Session.SetInt32(sessionName, loginUser.UserID);
-                    ViewBag.Log = "Login Succeeded";
-                    return RedirectToAction("Index", "Service");
+                    // Eger normal kullaniciysa
+                    if (loginUser.UserType == 1)
+                    {
+                        var sessionName = "userId";
+                        HttpContext.Session.SetInt32(sessionName, loginUser.UserID);
+                        ViewBag.Log = "Login Succeeded";
+                        return RedirectToAction("Index", "Service");
+                    }
+                    
+                    // Eger adminse
+                    else
+                    {
+                        var sessionName = "userId";
+                        HttpContext.Session.SetInt32(sessionName, loginUser.UserID);
+                        ViewBag.Log = "Login Succeeded";
+                        return RedirectToAction("AdminPage", "Admin");
+                    }
                 }
                 else
                 {
