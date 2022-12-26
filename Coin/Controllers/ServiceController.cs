@@ -51,6 +51,7 @@ namespace Coin.Controllers
         {
             var user = GetAndSetUserInfo();
 
+            // islem yapan kullanici sistemde bulunuyorsa ve Carbon Pointi gerekli sayinin uzerindeyse C-RC donusumunu yapiyoruz
             if (user != null)
             {
                 if (user.CarbonPoint > 100000000)
@@ -74,19 +75,20 @@ namespace Coin.Controllers
 
         public Users GetAndSetUserInfo()
         {
-                var userId = HttpContext.Session.GetInt32("userId").GetValueOrDefault();
-                var user = _userService.GetByID(userId);
+            // Kullanici bilgilerini ID uzerinden cekip viewlarda kullanilabilecek ViewBaglere atiyoruz.
+            var userId = HttpContext.Session.GetInt32("userId").GetValueOrDefault();
+            var user = _userService.GetByID(userId);
 
-                if (user != null)
-                {
-                    ViewBag.RecycleCoin = Program.MainBlockChain.GetBalance(user.UsersAdress);
-                    ViewBag.UserName = user.UserName;
-                    ViewBag.Mail = user.UserMail;
-                    ViewBag.Name = user.Name;
-                    ViewBag.Surname = user.Surname;
-                    ViewBag.Carbon = user.CarbonPoint;
-                    ViewBag.Adress = user.UsersAdress;
-                }
+            if (user != null)
+            {
+                ViewBag.RecycleCoin = Program.MainBlockChain.GetBalance(user.UsersAdress);
+                ViewBag.UserName = user.UserName;
+                ViewBag.Mail = user.UserMail;
+                ViewBag.Name = user.Name;
+                ViewBag.Surname = user.Surname;
+                ViewBag.Carbon = user.CarbonPoint;
+                ViewBag.Adress = user.UsersAdress;
+            }
 
             return user;
         }
@@ -103,15 +105,18 @@ namespace Coin.Controllers
         {
             var sender = GetAndSetUserInfo();
             var receiver = _userService.GetAllList().FirstOrDefault(u => u.UsersAdress == adress);
+            // eger gonderenin ve alicinin sha256 adresi sistemde bulunuyorsa ve gonderenin bakiyesi yeterliyse BlockChain uzerinden trasfer islemi gerceklesiyor
             if (sender != null && receiver != null)
             {
                 if (sender.RecycleCoin > amount)
                 {
                     try
                     {
+                        // BlockChain uzerinden transaction olusturulup sisteme isleniyor
                         Program.MainBlockChain.CreateTransaction(new Transaction(sender.UsersAdress, receiver.UsersAdress, amount));
                         Program.MainBlockChain.ProcessPendingTransactions(sender.UsersAdress);
 
+                        // Gonderenin ve alicinin balancelari BlockChain uzerinden cekiliyor
                         sender.RecycleCoin = Program.MainBlockChain.GetBalance(sender.UsersAdress);
                         receiver.RecycleCoin = Program.MainBlockChain.GetBalance(adress);
 
@@ -145,12 +150,14 @@ namespace Coin.Controllers
         [HttpPost]
         public IActionResult DoMining(Users user)
         {
+            // Mining islemi 5 RC odulu ile BlockChain uzerinden gerceklestiriliyor
             var userInfo = GetAndSetUserInfo();
             if (userInfo != null)
             {
                 Program.MainBlockChain.ProcessPendingTransactions(userInfo.UsersAdress);
                 ViewBag.Durum = "Mining Başarılı! Mining ödülü 5 RC hesabınıza eklenmiştir!";
 
+                // Kullanicinin guncel balance'i BlockChain uzerinden cekilip guncelleniyor
                 userInfo.RecycleCoin = Program.MainBlockChain.GetBalance(userInfo.UsersAdress);
                 _userService.UserUpdate(userInfo);
                 GetAndSetUserInfo();

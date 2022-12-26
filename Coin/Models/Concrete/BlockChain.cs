@@ -32,6 +32,7 @@ namespace Coin.Models.Concrete
             return block;
         }
 
+        // Chai'nin baslangic blogu
         public void AddGenesisBlock()
         {
             Chain.Add(CreateGenesisBlock());
@@ -57,6 +58,7 @@ namespace Coin.Models.Concrete
             PendingTransactions.Add(transaction);
         }
 
+        // CarbonCoinleri RC'ye Donustururken Kullanıyoruz
         public void ConvertCarbonCoinToRecycleCoin(string minerAdress, int coinToAdd)
         {
             CreateTransaction(new Transaction("Admin - Carbon to Recycle Coin", minerAdress, coinToAdd));
@@ -65,6 +67,7 @@ namespace Coin.Models.Concrete
             PendingTransactions = new List<Transaction>();
         }
 
+        // Bekleyen transactionlari blockchaine isliyoruz
         public void ProcessPendingTransactions(string minerAdress)
         {
             CreateTransaction(new Transaction("Admin - Mining Reward", minerAdress, Reward));
@@ -73,6 +76,7 @@ namespace Coin.Models.Concrete
             PendingTransactions= new List<Transaction>();
         }
 
+        // Chainimizin dogrulugunu kontrol ediyoruz.
         public bool IsValid()
         {
             for (int i = 1; i < Chain.Count; i++)
@@ -91,6 +95,7 @@ namespace Coin.Models.Concrete
             return true;
         }
 
+        // Kullanicilarin chain uzerindeki balance'ini getiriyor
         public int GetBalance(string adress)
         {
             int balance = 0;

@@ -24,15 +24,16 @@ namespace Coin.Models.Concrete
             TimeStamp = timeStamp;
         }
 
+        // Hash hesaplanmasi
         public string CalculateHash()
         {
             SHA256 sha256 = SHA256.Create();
             byte[] inBytes = Encoding.ASCII.GetBytes($"{TimeStamp}-{PrevHash ?? ""}-{JsonConvert.SerializeObject(Transactions)}-{Nonce}");
             byte[] outBytes = sha256.ComputeHash( inBytes );
             return Convert.ToBase64String( outBytes );
-
         }
 
+        // Mining ederken kullaniyoruz, difficulty degerine gore mining zorlugu belirleniyor
         public void Mine(int difficulty)
         {
             var leadingZero = new string('0', difficulty);

@@ -40,6 +40,7 @@ namespace Coin.Controllers
         [HttpPost]
         public IActionResult Index(Users user)
         {
+            // Girilen kullanici adi ve sifre kontrolu yapilip gecis saglaniyor
             using (var context = new Context())
             {
                 var loginUser = context.Users.FirstOrDefault(x => x.UserName == user.UserName && x.Password == user.Password);

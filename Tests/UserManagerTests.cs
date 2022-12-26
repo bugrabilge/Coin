@@ -30,6 +30,7 @@ namespace Tests
 
         }
 
+        // Testlerde kullanabilmek icin private 3 adet user barindiran bir user list donuyor
         private List<Users> GetTestUsersList()
         {
             List<Users> usersList = new List<Users>()
