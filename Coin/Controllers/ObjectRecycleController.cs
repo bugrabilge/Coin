@@ -20,6 +20,7 @@ namespace Coin.Controllers
 
         public IActionResult Index()
         {
+            // Tum geri donusum objeleri listeleniyor
             var values = _ojService.GetAllList();
             return View(values);
         }
