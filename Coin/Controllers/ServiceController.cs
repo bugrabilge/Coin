@@ -29,6 +29,8 @@ namespace Coin.Controllers
 
         public IActionResult Index()
         {
+            var userList = _userService.GetAllList();
+            Program.MainBlockChain.UpdateBlockChainWithDatabase(userList);
             return View();
         }
 
@@ -128,7 +130,6 @@ namespace Coin.Controllers
                     {
                         ViewBag.Log = "Hata ile karşılaşıldı.";
                     }
-
                 }
             }
             else
@@ -186,7 +187,6 @@ namespace Coin.Controllers
                 _userService.UserUpdate(user);
             }
             return RedirectToAction("Index", "Service");
-
         }
     }
 }

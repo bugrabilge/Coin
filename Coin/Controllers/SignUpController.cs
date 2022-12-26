@@ -32,8 +32,9 @@ namespace Coin.Controllers
             Block block = new Block(DateTime.Now, "", new List<Transaction>());
             users.UsersAdress = block.CalculateHash();
             users.UserStatus = true;
-            users.RecycleCoin = 100;
-            users.CarbonPoint = 1000;
+            users.RecycleCoin = 0;
+            users.CarbonPoint = 0;
+            users.UserType = 1;
             _usersService.UserAdd(users);
             return RedirectToAction("Index","Login");
         }

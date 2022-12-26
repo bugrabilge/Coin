@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EntityLayer.Concrete;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,21 @@ namespace Coin.Models.Concrete
         public void CreateTransaction(Transaction transaction)
         {
             PendingTransactions.Add(transaction);
+        }
+
+        // Kullanıcıların Database'de bulunan Rc lerini BlockChain'imiz ile esliyoruz
+        public void UpdateBlockChainWithDatabase(List<Users> userList)
+        {
+            if (this.Chain.Count < 2)
+            {
+                for (int i = 0; i < userList.Count; i++)
+                {
+                    CreateTransaction(new Transaction("Admin - User's Database RC Syncron", userList[i].UsersAdress, userList[i].RecycleCoin));
+                }
+                Block block = new Block(DateTime.Now, GetLatestBlock().Hash, PendingTransactions);
+                AddBlock(block);
+                PendingTransactions = new List<Transaction>();
+            }
         }
 
         // CarbonCoinleri RC'ye Donustururken Kullanıyoruz

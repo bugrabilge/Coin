@@ -19,6 +19,7 @@ namespace EntityLayer.Concrete
         public string UsersAdress { get; set; }
         public int RecycleCoin { get; set; }
         public int CarbonPoint { get; set; }
+        public int UserType { get; set; }
         public bool UserStatus { get; set; }
     }
 }
