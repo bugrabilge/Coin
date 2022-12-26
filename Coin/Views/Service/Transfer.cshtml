@@ -1,7 +1,6 @@
 ﻿@model EntityLayer.Concrete.Users
-
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Transfer";
     Layout = "~/Views/Shared/_LayoutLogined.cshtml";
 }
 
@@ -12,7 +11,8 @@
     <div class="container">
         <div style="align-items:center" class="row">
             <div class="col-md-8">
-                <h1 style="margin-top:50px;" class="services_taital">Profil</h1>
+                <h1 style="margin-top:50px;" class="services_taital">Transfer</h1>
+                <form method="post">
                 <div style="margin-bottom:150px;" class="container d-flex justify-content-center mt-5">
 
                     <div style="margin-top:25px;" class="card">
@@ -29,7 +29,6 @@
                             </div>
                         </div>
 
-
                         <div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
                             <div class="dollar-div px-3">
 
@@ -42,20 +41,31 @@
                             </div>
 
                         </div>
+                            <form method="get" action="Service\Transfer">
+                                <div class="form-group">
+                                    <table>
+                                        <tr>
+                                            <td>Alıcının Adresi : </td>
+                                            <td><input type="text" id="adress" name="adress" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rc Miktarı : </td>
+                                            <td><input type="text" id="amount" name="amount" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input type="submit" value="Transfer"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </form>
 
-                        <div class="fashion-studio-border pt-2">
-                            <span class="fashion-studio">Hesabımdaki Carbon = @ViewBag.Carbon</span>
-                        </div>
-                        <div class="wishlist-border pt-2">
-                            <span class="wishlist">1 Recycle Coin (RC) = 100.000.000 Carbon (C)</span>
-                        </div>
-                        <div class="recent-border mt-4">
-                            <span class="recent-orders"><a class="recent-orders" href="/Service/Convert/">Carbonları RC Coin'e Dönüştür</a></span>
-                        </div>
+                            <div>@ViewBag.Durum</div>
                     </div>
-
                 </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+

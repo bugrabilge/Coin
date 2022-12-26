@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using Coin.Models.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -28,9 +29,9 @@ namespace Coin.Controllers
         [HttpPost]
         public IActionResult Index(Users users)
         {
-            users.UsersAdress = 10;
+            Block block = new Block(DateTime.Now, "", new List<Transaction>());
+            users.UsersAdress = block.CalculateHash();
             users.UserStatus = true;
-            users.Coin = 100;
             users.RecycleCoin = 100;
             users.CarbonPoint = 1000;
             _usersService.UserAdd(users);

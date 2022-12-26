@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "DoMining";
+    Layout = "~/Views/Shared/_LayoutLogined.cshtml";
+}
+
+<link href="~/css/IDCard.css" type="text/css" rel="stylesheet" />
+
+<div style="margin:0px; padding:0px;">
+    <!--Arka Plan-->
+    <div class="container">
+        <div style="align-items:center" class="row">
+            <div class="col-md-8">
+                <h1 style="margin-top:50px;" class="services_taital">Mining</h1>
+                <form method="post">
+                    <div style="margin-bottom:150px;" class="container d-flex justify-content-center mt-5">
+
+                        <div style="margin-top:25px;" class="card">
+
+                            <div class="top-container">
+
+                                <img src="/Login/images/user 01.png" class="img-fluid profile-image" width="70">
+
+                                <div class="ml-3">
+                                    <p class="namemail">@ViewBag.Name @ViewBag.Surname</p>
+                                    <h5 class="name">@ViewBag.UserName</h5>
+                                    <p class="mail">@ViewBag.Mail</p>
+
+                                </div>
+                            </div>
+
+                            <div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
+                                <div class="dollar-div px-3">
+
+                                    <div class="round-div"><i class="fa fa-dollar dollar"></i></div>
+
+                                </div>
+                                <div class="d-flex flex-column text-right mr-2">
+                                    <span class="current-balance">Current Balance</span>
+                                    <span class="amount"><span class="dollar-sign">$</span>@ViewBag.RecycleCoin RC</span>
+                                </div>
+
+                            </div>
+                            <form method="get" action="Service\DoMining">
+                                <div class="form-group">
+                                    <table>
+                                        <tr>
+                                            <td></td>
+                                            <td><input type="submit" value="Mine" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </form>
+
+                            <div>@ViewBag.Durum</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

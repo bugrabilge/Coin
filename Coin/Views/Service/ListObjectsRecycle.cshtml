@@ -1,0 +1,75 @@
+﻿@using EntityLayer.Concrete
+@model List<ObjectRecycle>
+
+@{
+    ViewData["Title"] = "ListObjectsRecycle";
+    Layout = "~/Views/Shared/_LayoutLogined.cshtml";
+}
+
+
+
+<div style="margin:0px; padding:0px;">
+    <!--Arka Plan-->
+    <div class="container">
+        <div style="align-items:center" class="row">
+            <div class="col-md-8">
+                <h1 style="margin-top:50px;" class="services_taital">Transfer</h1>
+                <form method="post">
+                    <div style="margin-bottom:150px;" class="container d-flex justify-content-center mt-5">
+
+                        <div style="margin-top:25px;" class="card">
+
+                            <div>
+                                @using (Html.BeginForm())
+                                {
+                                    <table class="table">
+                                        <tr>
+                                            <th>
+                                                Id
+                                            </th>
+                                            <th>
+                                                Object Name
+                                            </th>
+                                            <th>
+                                                Object Quantity
+                                            </th>
+                                            <th>
+                                                Object Carbon
+                                            </th>
+                                            <th></th>
+                                        </tr>
+
+                                        @foreach (var item in Model)
+                                        {
+                                            @if (item.ObjectStatus == true)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ObjectID)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ObjectName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ObjectQuantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ObjectCarbonPoint)
+                                                    </td>
+                                                    <td>
+                                                        @Html.ActionLink("Carbon Coin'e Dönüştür", "ConvertObjectToCarbonCoin", "Service", new {carbonPoint = item.ObjectCarbonPoint} )
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

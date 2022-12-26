@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using Coin.Models.Concrete;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace Coin.Controllers
@@ -16,10 +19,12 @@ namespace Coin.Controllers
     public class ServiceController : Controller
     {
         private readonly IUsersService _userService;
+        private readonly IObjectRecycleService _ojService;
 
-        public ServiceController(IUsersService userService)
+        public ServiceController(IUsersService userService, IObjectRecycleService ojService)
         {
             _userService = userService;
+            _ojService = ojService;
         }
 
         public IActionResult Index()
@@ -48,13 +53,21 @@ namespace Coin.Controllers
 
             if (user != null)
             {
-                double coinToAdd = user.CarbonPoint / 100000000;
-                double currentCoin = coinToAdd + user.RecycleCoin;
-                user.RecycleCoin = currentCoin;
-                user.CarbonPoint = user.CarbonPoint - (int)(coinToAdd * 100000000);
-                _userService.UserUpdate(user);
+                if (user.CarbonPoint > 100000000)
+                {
+                    var coinToAdd = user.CarbonPoint / 100000000;
+                    Program.MainBlockChain.ConvertCarbonCoinToRecycleCoin(user.UsersAdress,coinToAdd);
+                    user.RecycleCoin = Program.MainBlockChain.GetBalance(user.UsersAdress);
+                    user.CarbonPoint = user.CarbonPoint - (coinToAdd * 100000000);
+                    _userService.UserUpdate(user);
+                    ViewBag.Coin = "İşlem Başarılı! "+ coinToAdd +" Recycle Coin bakiyenize eklenmiştir.";
+                }
+
+                else
+                {
+                    ViewBag.YetersizBakiye = "Carbon bakiyeniz bu işlemi gerçekleştirmek için yetersizdir!";
+                }
             }
-            ViewBag.Coin = user.RecycleCoin;
             GetAndSetUserInfo();
             return View();
         }
@@ -66,16 +79,107 @@ namespace Coin.Controllers
 
                 if (user != null)
                 {
+                    ViewBag.RecycleCoin = Program.MainBlockChain.GetBalance(user.UsersAdress);
                     ViewBag.UserName = user.UserName;
                     ViewBag.Mail = user.UserMail;
                     ViewBag.Name = user.Name;
                     ViewBag.Surname = user.Surname;
-                    ViewBag.RecycleCoin = user.RecycleCoin;
                     ViewBag.Carbon = user.CarbonPoint;
+                    ViewBag.Adress = user.UsersAdress;
                 }
 
             return user;
         }
 
+        [HttpGet]
+        public IActionResult Transfer()
+        {
+            GetAndSetUserInfo();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Transfer(string adress, int amount)
+        {
+            var sender = GetAndSetUserInfo();
+            var receiver = _userService.GetAllList().FirstOrDefault(u => u.UsersAdress == adress);
+            if (sender != null && receiver != null)
+            {
+                if (sender.RecycleCoin > amount)
+                {
+                    try
+                    {
+                        Program.MainBlockChain.CreateTransaction(new Transaction(sender.UsersAdress, receiver.UsersAdress, amount));
+                        Program.MainBlockChain.ProcessPendingTransactions(sender.UsersAdress);
+
+                        sender.RecycleCoin = Program.MainBlockChain.GetBalance(sender.UsersAdress);
+                        receiver.RecycleCoin = Program.MainBlockChain.GetBalance(adress);
+
+                        _userService.UserUpdate(sender);
+                        _userService.UserUpdate(receiver);
+                        ViewBag.Durum = "İşlem Başarılı! Mining ödülü 5 RC - Gönderim miktarı " + amount + " = " + (5-amount) +" hesabınıza eklenmiştir.";
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Log = "Hata ile karşılaşıldı.";
+                    }
+
+                }
+            }
+            else
+            {
+                ViewBag.Durum = "Kullanıcı Bulunamadı veya Bakiyeniz yetersiz.";
+            }
+
+            GetAndSetUserInfo();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult DoMining()
+        {
+            GetAndSetUserInfo();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DoMining(Users user)
+        {
+            var userInfo = GetAndSetUserInfo();
+            if (userInfo != null)
+            {
+                Program.MainBlockChain.ProcessPendingTransactions(userInfo.UsersAdress);
+                ViewBag.Durum = "Mining Başarılı! Mining ödülü 5 RC hesabınıza eklenmiştir!";
+
+                userInfo.RecycleCoin = Program.MainBlockChain.GetBalance(userInfo.UsersAdress);
+                _userService.UserUpdate(userInfo);
+                GetAndSetUserInfo();
+            }
+            return View();
+        }
+
+        public IActionResult TransactionHistory()
+        {
+            return View(Program.MainBlockChain);
+        }
+
+        public IActionResult ListObjectsRecycle()
+        {
+            var items = _ojService.GetAllList();
+            return View(items);
+        }
+
+
+        public IActionResult ConvertObjectToCarbonCoin(int carbonPoint)
+        {
+            var user = GetAndSetUserInfo();
+            if (user != null)
+            {
+                user.CarbonPoint = user.CarbonPoint + carbonPoint;
+                _userService.UserUpdate(user);
+            }
+            return RedirectToAction("Index", "Service");
+
+        }
     }
 }

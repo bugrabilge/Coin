@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/UserLayout.cshtml";
+    Layout = "~/Views/Shared/_LayoutLogined.cshtml";
 }
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
             <p class="what_text">It is a long established fact that a reader will be distracted by the readable content of a </p>
             <div class="what_we_do_section_2">
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-4 col-sm-6">
                         <div class="box_main">
                             <div class="icon_1"><img src="~/tema/images/icon-1.png"></div>
                             <h3 class="accounting_text">RC Coin Alış & Satış</h3>
@@ -24,7 +24,7 @@
                             <div class="moremore_bt_1"><a href="/Service/Convert/">Coin Dönüştür</a></div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-4 col-sm-6">
                         <div class="box_main">
                             <div class="icon_1"><img src="~/tema/images/icon-2.png"></div>
                             <h3 class="accounting_text">Profil</h3>
@@ -32,20 +32,36 @@
                             <div class="moremore_bt_1"><a href="/Service/Profile/">Profile Gir</a></div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-4 col-sm-6">
                         <div class="box_main">
                             <div class="icon_1"><img src="~/tema/images/icon-3.png"></div>
                             <h3 class="accounting_text">Coin Transfer</h3>
-                            <p class="lorem_text">Carbon Coin (C) ya da Recycle Coinlerinizi (RC) başka kullanıcıların e-cüzdanına gönderin.</p>
-                            <div class="moremore_bt_1"><a href="#">Read More </a></div>
+                            <p class="lorem_text">Recycle Coinlerinizi (RC) başka kullanıcılarına transfer edin.</p>
+                            <div class="moremore_bt_1"><a href="/Service/Transfer/">Transfer </a></div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="box_main">
+                            <div class="icon_1"><img src="~/tema/images/icon-3.png"></div>
+                            <h3 class="accounting_text">Coin Mining</h3>
+                            <p class="lorem_text">Recycle Coin (RC) mining edin.</p>
+                            <div class="moremore_bt_1"><a href="/Service/DoMining/">Mining </a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
                         <div class="box_main">
                             <div class="icon_1"><img src="~/tema/images/icon-4.png"></div>
                             <h3 class="accounting_text">Carbon Coin Kazan</h3>
                             <p class="lorem_text">Geri dönüştürülebilir malzemeler ile Carbon Coin (C) kazanın.</p>
-                            <div class="moremore_bt_1"><a href="#">Read More </a></div>
+                            <div class="moremore_bt_1"><a href="/Service/ListObjectsRecycle/">Read More </a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="box_main">
+                            <div class="icon_1"><img src="~/tema/images/icon-4.png"></div>
+                            <h3 class="accounting_text">İşlem Geçmişi</h3>
+                            <p class="lorem_text">Blockchain sistemimiz üzerinden gerçekleşen işlemleri görün.</p>
+                            <div class="moremore_bt_1"><a href="/Service/TransactionHistory/">İncele</a></div>
                         </div>
                     </div>
                 </div>

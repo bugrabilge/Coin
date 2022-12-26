@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221219144414_migUlas")]
-    partial class migUlas
+    [Migration("20221225223159_userUpdate")]
+    partial class userUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,17 +141,14 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("CarbonPoint")
                         .HasColumnType("int");
 
-                    b.Property<double>("Coin")
-                        .HasColumnType("float");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("RecycleCoin")
-                        .HasColumnType("float");
+                    b.Property<int>("RecycleCoin")
+                        .HasColumnType("int");
 
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
@@ -165,8 +162,8 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("UserStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UsersAdress")
-                        .HasColumnType("int");
+                    b.Property<string>("UsersAdress")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID");
 
