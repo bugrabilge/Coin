@@ -115,8 +115,8 @@ namespace Coin.Controllers
                     try
                     {
                         // BlockChain uzerinden transaction olusturulup sisteme isleniyor
-                        Program.MainBlockChain.CreateTransaction(new Transaction(sender.UsersAdress, receiver.UsersAdress, amount));
                         Program.MainBlockChain.ProcessPendingTransactions(sender.UsersAdress);
+                        Program.MainBlockChain.CreateTransaction(new Transaction(sender.UsersAdress, receiver.UsersAdress, amount));
 
                         // Gonderenin ve alicinin balancelari BlockChain uzerinden cekiliyor
                         sender.RecycleCoin = Program.MainBlockChain.GetBalance(sender.UsersAdress);
@@ -124,7 +124,7 @@ namespace Coin.Controllers
 
                         _userService.UserUpdate(sender);
                         _userService.UserUpdate(receiver);
-                        ViewBag.Durum = "İşlem Başarılı! Mining ödülü 5 RC - Gönderim miktarı " + amount + " = " + (5-amount) +" hesabınıza eklenmiştir.";
+                        ViewBag.Durum = "İşlem sonraki geçişte gerçekleşip, Mining ödülü 5 RC - Gönderim miktarı " + amount + " = " + (5-amount) +" hesabınıza eklenecektir.";
                     }
                     catch (Exception)
                     {
@@ -145,6 +145,7 @@ namespace Coin.Controllers
         public IActionResult DoMining()
         {
             GetAndSetUserInfo();
+            ViewBag.Total = Program.MainBlockChain.TotalCoin;
             return View();
         }
 
@@ -157,6 +158,7 @@ namespace Coin.Controllers
             {
                 Program.MainBlockChain.ProcessPendingTransactions(userInfo.UsersAdress);
                 ViewBag.Durum = "Mining Başarılı! Mining ödülü 5 RC hesabınıza eklenmiştir!";
+                ViewBag.Total = Program.MainBlockChain.TotalCoin;
 
                 // Kullanicinin guncel balance'i BlockChain uzerinden cekilip guncelleniyor
                 userInfo.RecycleCoin = Program.MainBlockChain.GetBalance(userInfo.UsersAdress);

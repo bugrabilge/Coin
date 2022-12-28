@@ -12,6 +12,7 @@ namespace Coin.Models.Concrete
         public IList<Block> Chain { get; set; }
         public int difficulty { get; set; } = 2;
         public int Reward { get; set; } = 5;
+        public int TotalCoin { get; set; } = 100000005;
 
         public BlockChain() 
         {
@@ -51,6 +52,7 @@ namespace Coin.Models.Concrete
             block.PrevHash = latestBlock.Hash;
             block.Hash = block.CalculateHash();
             block.Mine(this.difficulty);
+            TotalCoin -= Reward;
             Chain.Add(block);
         }
 
@@ -86,10 +88,10 @@ namespace Coin.Models.Concrete
         // Bekleyen transactionlari blockchaine isliyoruz
         public void ProcessPendingTransactions(string minerAdress)
         {
-            CreateTransaction(new Transaction("Admin - Mining Reward", minerAdress, Reward));
             Block block = new Block(DateTime.Now, GetLatestBlock().Hash, PendingTransactions);
             AddBlock(block);
             PendingTransactions= new List<Transaction>();
+            CreateTransaction(new Transaction("Admin - Mining Reward", minerAdress, Reward));
         }
 
         // Chainimizin dogrulugunu kontrol ediyoruz.

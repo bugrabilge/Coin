@@ -150,7 +150,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\MailGrpcService\MailGrpcService\Protos\greet.proto" GrpcServices="Client">
+    <Protobuf Include="..\..\..\..\..\source\repos\MailGrpcService\MailGrpcService\Protos\greet.proto" GrpcServices="Client">
       <Link>Protos\greet.proto</Link>
     </Protobuf>
   </ItemGroup>

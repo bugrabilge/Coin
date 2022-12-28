@@ -30,7 +30,10 @@ namespace Coin
                 Server = new P2PServer();
                 Server.Start();
             }
+
+
             CreateHostBuilder(args).Build().Run();
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
